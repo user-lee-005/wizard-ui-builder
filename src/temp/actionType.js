@@ -1,0 +1,5 @@
+// actionTypes.js
+export const ADD_TEXTBOX = 'ADD_TEXTBOX';
+export const REMOVE_TEXTBOX = 'REMOVE_TEXTBOX';
+export const UPDATE_TEXTBOX = 'UPDATE_TEXTBOX';
+export const UPDATE_REQUIRED_STATUS = 'UPDATE_REQUIRED_STATUS';

@@ -1,0 +1,208 @@
+
+//---------------------------------------------------------------------------------------------------------------------------------
+
+// {/* {textBoxes.map((textBox) => (
+//   <TextBox
+//     key={textBox.id}
+//     value={textBox.value}
+//     onRemove={() => removeDynamicField(textBox.id, "text")}
+//   />
+// ))}
+// {radioButtons.map((radioButton) => (
+//   <AddRadioButton
+//     key={radioButton.id}
+//     value={radioButton.value}
+//     onRemove={() => removeDynamicField(radioButton.id, "radio")}
+//   />
+// ))} */}
+
+// const addDynamicField = (type) => {
+  //   switch (type) {
+  //     case "text":
+  //       dispatch(addTextBox({ id: Date.now(), value: "", wizardId }));
+  //       break;
+  //     case "radio":
+  //       dispatch(addRadioButtonAction({ id: Date.now(), value: "", wizardId }));
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   const newField = {
+  //     pageIdToAddFields: wizardId,
+  //     questionType: type,
+  //     question: "",
+  //   };
+
+  //   dispatch(addFields(newField));
+  // };
+
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// import React from "react";
+// import TextBox from "../components/TextBox";
+// import { addTextBox as addTextBoxAction } from "../redux/slices/textBoxSlice";
+// import { removeTextBox as removeTextBoxAction } from "../redux/slices/textBoxSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import RadioButton from "../components/RadioButton";
+
+// const NewWizardPage = () => {
+//   const textBoxes = useSelector((state) => state.textBox.textBoxes);
+//   const dispatch = useDispatch();
+//   const wizardId = Date.now();
+
+//   const addTextBox = () => {
+//     dispatch(addTextBoxAction({ id: Date.now(), value: "", wizardId }));
+//   };
+//   const removeTextBox = (id) => {
+//     dispatch(removeTextBoxAction(id));
+//   };
+
+//   // const handleSubmit = (e) => {
+//   //   e.preventDefault();
+//   //   // Handle form submission with textBoxValues
+//   //   console.log("Form submitted with values:", textBoxes);
+//   // };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//   };
+
+//   return (
+//     <div className="flex flex-col h-screen">
+//       <div className="w-screen flex flex-col items-center">
+//         <h1 className="text-center font-bold text-5xl pt-3 text-white bg-blue-500 w-full h-20">
+//           New Wizard Page
+//         </h1>
+//       </div>
+//       <div className="flex h-screen bg-blue-500">
+//         <div>
+//           <button
+//             onClick={addTextBox}
+//             className="btn btn-green mb-4 mt-4 shadow-xl"
+//           >
+//             Add Text
+//           </button>
+//         </div>
+//         <div className="flex flex-col p-6 w-screen h-screen bg-cyan-500">
+//           <div>Dynamic Forms</div>
+//           <form onSubmit={handleSubmit} className="flex flex-col">
+//             {textBoxes.map((textBox) => (
+//               <TextBox
+//                 key={textBox.id}
+//                 value={textBox.value}
+//                 onRemove={() => removeTextBox(textBox.id)}
+//               />
+//             ))}
+//             <RadioButton />
+//             <button type="submit" className="btn btn-green rounded-md">
+//               Submit
+//             </button>
+//           </form>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default NewWizardPage;
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// const [textBoxValues, setTextBoxValues] = useState([]);
+//   const addTextBox = () => {
+//     const newTextBoxValues = [...textBoxValues, { id: Date.now(), value: "" }];
+//     setTextBoxValues(newTextBoxValues);
+//   };
+
+//   const removeTextBox = (id) => {
+//     const updatedTextBoxValues = textBoxValues.filter(
+//       (textBox) => textBox.id !== id
+//     );
+//     setTextBoxValues(updatedTextBoxValues);
+//   };
+
+//   const updateTextBox = (id, value) => {
+//     const updatedTextBoxValues = textBoxValues.map((textBox) =>
+//       textBox.id === id ? { ...textBox, value } : textBox
+//     );
+//     setTextBoxValues(updatedTextBoxValues);
+//   };
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// import React, { useState } from "react";
+// import DynamicTextBoxes from "../components/TextBox";
+
+// const NewWizardPage = () => {
+//   const [textBoxValues, setTextBoxValues] = useState([]);
+
+//   const addTextBox = () => {
+//     const newTextBoxValues = [...textBoxValues, { id: Date.now(), value: "" }];
+//     setTextBoxValues(newTextBoxValues);
+//   };
+
+//   const removeTextBox = (id) => {
+//     const updatedTextBoxValues = textBoxValues.filter(
+//       (textBox) => textBox.id !== id
+//     );
+//     setTextBoxValues(updatedTextBoxValues);
+//   };
+
+//   const updateTextBox = (id, value) => {
+//     const updatedTextBoxValues = textBoxValues.map((textBox) =>
+//       textBox.id === id ? { ...textBox, value } : textBox
+//     );
+//     setTextBoxValues(updatedTextBoxValues);
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     // Handle form submission with textBoxValues
+//     console.log("Form submitted with values:", textBoxValues);
+//   };
+
+//   return (
+//     <div className="flex flex-col h-screen">
+//       <div className="w-screen flex flex-col items-center">
+//         <h1 className="text-center font-bold text-5xl pt-3 text-white bg-blue-400 w-full h-20">
+//           New Wizard Page
+//         </h1>
+//       </div>
+//       <div className="flex flex-col items-center">
+//         <div className="flex flex-row bg-blue-300 p-5">
+//           {textBoxValues.map((textBox) => (
+//             <DynamicTextBoxes
+//               key={textBox.id}
+//               value={textBox.value}
+//               onChange={(value) => updateTextBox(textBox.id, value)}
+//               onRemove={() => removeTextBox(textBox.id)}
+//             />
+//           ))}
+//         </div>
+//         <div className="flex flex-col p-6">
+//           <form onSubmit={handleSubmit}>
+//             {textBoxValues.map((textBox) => (
+//               <input
+//                 key={textBox.id}
+//                 type="text"
+//                 value={textBox.value}
+//                 onChange={(e) => updateTextBox(textBox.id, e.target.value)}
+//                 className="mb-2 p-2"
+//                 placeholder={`Input for ID: ${textBox.id}`}
+//               />
+//             ))}
+//             <button type="submit" className="btn btn-blue">
+//               Submit
+//             </button>
+//           </form>
+//         </div>
+//       </div>
+//       <button onClick={addTextBox} className="btn btn-blue mb-4">
+//         Add Text Box
+//       </button>
+//     </div>
+//   );
+// };
+
+// export default NewWizardPage;

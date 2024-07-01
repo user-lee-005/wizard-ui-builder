@@ -1,0 +1,109 @@
+// ... (import statements remain unchanged)
+
+const NewWizardPage = () => {
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [savedComponents, setSavedComponents] = useState([]);
+
+  // ... (existing code)
+
+  const togglePreviewMode = () => {
+    setIsPreviewMode((prevMode) => !prevMode);
+  };
+
+  const saveDynamicField = (field) => {
+    setSavedComponents((prevSavedComponents) => [
+      ...prevSavedComponents,
+      { id: field.id, type: field.questionType, value: field.value },
+    ]);
+  };
+
+  return (
+    <div>
+      <div>
+        <Header />
+      </div>
+      <div className="flex">
+        <div className="p-6 w-56 flex flex-col items-stretch content-around gap-y-4 bg-teal-400 space-y-6">
+          <button
+            className="bg-green-600 btn mt-2"
+            onClick={() => addDynamicField("text")}
+          >
+            Add Text
+          </button>
+          {/* ... (other buttons for adding different components) */}
+        </div>
+        <div className="flex flex-grow flex-col p-6 bg-teal-600 text-white items-center">
+          <div className="text-2xl font-semibold mr-28 mb-6">
+            Template Title
+          </div>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <div className="flex flex-col max-w-5xl w-screen space-y-4 flex-grow">
+              {/* Render components based on edit/preview mode */}
+              {isPreviewMode
+                ? /* Render saved components in preview mode */
+                  savedComponents.map((savedComponent) => (
+                    <RenderSavedComponent
+                      key={savedComponent.id}
+                      type={savedComponent.type}
+                      value={savedComponent.value}
+                    />
+                  ))
+                : /* Render dynamic fields in edit mode */
+                  dynamicFields.map((field) => (
+                    <DynamicComponent
+                      key={field.id}
+                      type={field.questionType}
+                      value={field.value}
+                      onRemove={() =>
+                        removeDynamicField(field.id, field.questionType)
+                      }
+                      onSave={() => saveDynamicField(field)}
+                      pageId={pageId}
+                      qId={field.id}
+                    />
+                  ))}
+            </div>
+          </form>
+          <div className="grid grid-cols-2 gap-4 place-content-around h-48 w-full">
+            {pageId === 1 ? (
+              <button
+                className="btn-green rounded-md hover:shadow-md w-24 h-8 col-start-1"
+                onClick={() => handleBack()}
+              >
+                Back
+              </button>
+            ) : (
+              <button
+                className="btn-green rounded-md hover:shadow-md w-24 h-8 col-start-1"
+                onClick={() => handlePrev()}
+              >
+                Prev
+              </button>
+            )}
+            {pageId === wizardCount ? (
+              <button
+                className="btn-green rounded-md hover:shadow-md w-24 h-8 col-end-7"
+                onClick={() =>
+                  isPreviewMode ? handleSubmit() : togglePreviewMode()
+                }
+              >
+                {isPreviewMode ? "Submit" : "Preview"}
+              </button>
+            ) : (
+              <button
+                className="btn-green rounded-md hover:shadow-md w-24 h-8 col-end-7"
+                onClick={() =>
+                  isPreviewMode ? togglePreviewMode() : handleNext()
+                }
+              >
+                {isPreviewMode ? "Edit" : "Next"}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default NewWizardPage;
