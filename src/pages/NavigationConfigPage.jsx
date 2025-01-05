@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { setNavConfigs, removeConfig } from "../redux/slices/dataSlice";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import MultiSelect from "react-select-multi-choose";
 
 const NavigationConfigPage = (props) => {
   const dispatch = useDispatch();
@@ -172,10 +171,7 @@ const NavigationConfigPage = (props) => {
                     type="text"
                     value={valueInCondition}
                     onChange={(e) =>
-                      setValueInCondition((prevData) => [
-                        ...prevData,
-                        e.target.value,
-                      ])
+                      setValueInCondition(e.target.value)
                     }
                     className="w-full px-2 py-1 border border-gray-300 rounded"
                   />
